@@ -46,7 +46,4 @@ class News_Data {
     public void setUrl(String url) {
         this.url = url;
     }
-
-
-
 }

@@ -1,5 +1,6 @@
 package com.example.newsapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,10 +21,11 @@ public class News_Adapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     private ArrayList<News_Data> items= new ArrayList<News_Data>();
     private NewsItemClicked listener;
-
+    Context context;
     //Constructor
-    public News_Adapter(NewsItemClicked listener) {
+    public News_Adapter(Context context,NewsItemClicked listener) {
      this.listener = listener;
+     this.context =context;
     }
 
     @NonNull
@@ -49,7 +52,8 @@ public class News_Adapter extends RecyclerView.Adapter<NewsViewHolder> {
         News_Data currentItem = items.get(position);
         holder.item_title.setText(currentItem.getTitle());
         holder.item_author.setText(currentItem.getAuthor());
-        Glide.with(holder.itemView.getContext()).load(currentItem.imageURL).into(holder.item_image);
+
+        Glide.with(context).load(currentItem.imageURL).into(holder.item_image);
     }
 
     @Override
@@ -62,6 +66,7 @@ public class News_Adapter extends RecyclerView.Adapter<NewsViewHolder> {
         items.addAll(UpdateNews);
         notifyDataSetChanged();
     }
+
 }
 
 //NewsViewHolder contains all the items which we want to inflate
