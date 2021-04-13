@@ -5,22 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".News_Information">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/frame"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <ImageView
         android:id="@+id/information_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="centerCrop"
         tools:srcCompat="@drawable/ic_launcher_background"
         />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:id="@+id/back_btn"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/ic_action_name"
+        android:background="@null"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_transparent_black"
+            android:clickable="false" />
+
+    </FrameLayout>
     <TextView
         android:id="@+id/information_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="#f2f2f2"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="75dp"
         />
     <TextView
         android:id="@+id/information_author"
@@ -28,6 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="TextView"
+        android:textColor="#bababa"
+        android:textSize="20sp"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/information_title"

@@ -45,6 +45,9 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    //Chrome Custom Tabs
+    implementation "androidx.browser:browser:1.3.0"
+
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
