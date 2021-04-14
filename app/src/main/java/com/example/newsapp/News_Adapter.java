@@ -54,7 +54,16 @@ public class News_Adapter extends RecyclerView.Adapter<NewsViewHolder> {
         holder.item_title.setText(currentItem.getTitle());
         holder.item_author.setText(currentItem.getAuthor());
 
-        Glide.with(context).load(currentItem.imageURL).into(holder.item_image);
+        String date=currentItem.getPublishedAt();
+        int iend = date.indexOf("T");
+        String subString;
+        if(iend!=-1)
+        {
+            subString = date.substring(0,iend);
+            holder.item_date.setText(subString);
+        }
+
+        Glide.with(context).load(currentItem.getImageURL()).into(holder.item_image);
     }
 
     @Override
@@ -75,11 +84,13 @@ class NewsViewHolder extends RecyclerView.ViewHolder{
     TextView item_title;
     ImageView item_image;
     TextView item_author;
+    TextView item_date;
     public NewsViewHolder(@NonNull View itemView) {
         super(itemView);
         item_title = (TextView) itemView.findViewById(R.id.news_item);
         item_image = (ImageView) itemView.findViewById(R.id.image_item);
         item_author = (TextView) itemView.findViewById(R.id.author);
+        item_date = (TextView) itemView.findViewById(R.id.item_date);
     }
 }
 interface NewsItemClicked {

@@ -18,6 +18,26 @@ public class News implements Serializable {
     private String author;
     @ColumnInfo(name = "url")
     private String url;
+    @ColumnInfo(name = "description")
+    private String description;
+    @ColumnInfo(name = "publishedAt")
+    private String publishedAt;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
     public String getUrl() {
         return url;

@@ -92,7 +92,9 @@ public class News_Main extends AppCompatActivity implements NewsItemClicked{
                                 newsJsonObject.getString("title"),
                                 newsJsonObject.getString("author"),
                                 newsJsonObject.getString("url"),
-                                newsJsonObject.getString("urlToImage")
+                                newsJsonObject.getString("urlToImage"),
+                                newsJsonObject.getString("description"),
+                                newsJsonObject.getString("publishedAt")
                         );
                         newsArray.add(news_data);
                     }
@@ -125,6 +127,8 @@ public class News_Main extends AppCompatActivity implements NewsItemClicked{
                     news.setAuthor(newsArray.get(i).getAuthor());
                     news.setImageURL(newsArray.get(i).getImageURL());
                     news.setUrl(newsArray.get(i).getUrl());
+                    news.setDescription(newsArray.get(i).getDescription());
+                    news.setPublishedAt(newsArray.get(i).getPublishedAt());
                     DatabaseClient.getInstance(getApplicationContext()).getAppDataBase().news_dao().Insert(news);
                 }
                     return null;
@@ -154,7 +158,9 @@ public class News_Main extends AppCompatActivity implements NewsItemClicked{
                             news.getTitle(),
                             news.getAuthor(),
                             news.getUrl(),
-                            news.getImageURL()
+                            news.getImageURL(),
+                            news.getDescription(),
+                            news.getPublishedAt()
                             );
                     newsArray.add(news_data);
                 }
