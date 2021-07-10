@@ -21,6 +21,6 @@ public interface News_DAO {
 //    @Query("DELETE FROM  news_table")
 //    void deleteAllNews();
 
-    @Query("Select *  from news_table")
+    @Query("Select *  from news_table LIMIT 15")
     List<News> getAllData();
 }

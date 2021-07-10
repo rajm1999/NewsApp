@@ -37,12 +37,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class News_Main extends AppCompatActivity implements NewsItemClicked{
-
+public class News_Main extends AppCompatActivity implements NewsItemClicked, News_Catagory_Adapter.CatagoryClickInterface {
+//4f4bc0bc12ee49e9a7b004071d4b2ff9
     private News_Adapter news_adapter;
-    RecyclerView news_recyclerView;
+    RecyclerView news_recyclerView,news_CatagoryRV;
     private ProgressBar pb;
     ArrayList<News_Data> newsArray;
+    ArrayList<CatagoryRVModal> catagoryRVModalArrayList;
+    private  News_Catagory_Adapter catagory_adapter;
 
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
@@ -53,27 +55,45 @@ public class News_Main extends AppCompatActivity implements NewsItemClicked{
         pb = findViewById(R.id.pb);
         pb.setVisibility(View.GONE);
         newsArray = new ArrayList<>();
+        catagoryRVModalArrayList=new ArrayList<>();
         news_recyclerView =(RecyclerView) findViewById(R.id.news_RecyclerView);
+        news_CatagoryRV= (RecyclerView) findViewById(R.id.idRVCatagories);
         news_recyclerView.setLayoutManager(layoutManager);
         news_recyclerView.setItemAnimator(new DefaultItemAnimator());
         news_recyclerView.setNestedScrollingEnabled(false);
 
         news_adapter = new News_Adapter(this,this::onItemClicked);
+        catagory_adapter = new News_Catagory_Adapter(catagoryRVModalArrayList,this,this::onCatagoryClicked);
+
         news_recyclerView.setAdapter(news_adapter);
-        Context context =this;
+        news_CatagoryRV.setAdapter(catagory_adapter);
+        getCatagories();
+
+        Context context=this;
         ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if(activeNetwork !=null && activeNetwork.isConnectedOrConnecting() && newsArray!=null ) {
-            fetchData();
+            fetchData("general");
         }
         else{
             fetchfromRoom();
         }
     }
+    private void getCatagories(){
+        catagoryRVModalArrayList.add(new CatagoryRVModal("technology","https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
+        catagoryRVModalArrayList.add(new CatagoryRVModal("science","https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
+        catagoryRVModalArrayList.add(new CatagoryRVModal("sports","https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3BvcnRzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"));
+        catagoryRVModalArrayList.add(new CatagoryRVModal("general","https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fGdlbmVyYWwlMjBuZXdzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"));
+        catagoryRVModalArrayList.add(new CatagoryRVModal("business","https://images.unsplash.com/photo-1617321248535-bcfdd5253295?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"));
+        catagoryRVModalArrayList.add(new CatagoryRVModal("entertainment","https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80"));
+        catagoryRVModalArrayList.add(new CatagoryRVModal("health","https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"));
+        catagory_adapter.notifyDataSetChanged();
+    }
+    private void fetchData(String catagory){
+        newsArray.clear();
+        String url ="https://saurav.tech/NewsAPI/top-headlines/category/"+ catagory +"/in.json";
 
-    private void fetchData(){
-        String url ="https://saurav.tech/NewsAPI/top-headlines/category/health/in.json";
         pb.setVisibility(View.VISIBLE);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
@@ -184,4 +204,19 @@ public class News_Main extends AppCompatActivity implements NewsItemClicked{
         this.startActivity(intent);
     }
 
+    @Override
+    public void onCatagoryClicked(int position) {
+    String catagory = catagoryRVModalArrayList.get(position).getCatagory();
+        Context context =this;
+
+        ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if(activeNetwork !=null && activeNetwork.isConnectedOrConnecting() && newsArray!=null ) {
+            fetchData(catagory);
+        }
+        else{
+            fetchfromRoom();
+        }
+    }
 }

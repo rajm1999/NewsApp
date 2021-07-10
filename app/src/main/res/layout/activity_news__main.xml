@@ -25,13 +25,22 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/idRVCatagories"
+        android:orientation="horizontal"
+        tools:listitem="@layout/catagories_rv_item"
+        android:layout_below="@+id/headline"
+        android:layout_marginTop="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
         android:id="@+id/news_RecyclerView"
         android:layout_height="match_parent"
-        android:layout_below="@+id/headline"
+        android:layout_below="@+id/idRVCatagories"
         android:layoutAnimation="@anim/layout_animation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-        />
+         />
 
     <ProgressBar
         android:id="@+id/pb"
